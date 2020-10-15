@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.kodo.friple.mvvm.viewmodel.RegViewModel" />
+            type="com.kodo.friple.mvvm.viewmodel.RegLogViewModel" />
 
     </data>
 
@@ -50,58 +50,87 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Registration"
+            android:textColor="@color/color_onBackground"
             android:textSize="36sp"
             app:layout_constraintBottom_toTopOf="@+id/et_login"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/guideline4"
-            app:layout_constraintVertical_bias="0.0"
-            android:textColor="@color/color_onBackground" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:id="@+id/et_login"
             android:layout_width="0dp"
             android:layout_height="30dp"
+            android:background="@drawable/round_shape"
             android:ems="10"
             android:hint="Login"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            android:padding="5dp"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:text="@={viewModel.login}"
+            android:textColor="@color/color_onSurface"
+            android:textColorHint="@color/color_unselectedWhite"
+
+            app:layout_constraintBottom_toTopOf="@+id/et_email"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/guideline4"
             app:layout_constraintVertical_bias="0.45"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/round_shape"
+            android:ems="10"
+            android:hint="Email"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
             android:padding="5dp"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:text="@={viewModel.email}"
+
             android:textColor="@color/color_onSurface"
             android:textColorHint="@color/color_unselectedWhite"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:paddingRight="10dp"
-            android:paddingEnd="10dp"
-            android:importantForAutofill="no" />
+            app:layout_constraintBottom_toTopOf="@+id/et_password"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/et_login"
+            app:layout_constraintVertical_bias="0.45" />
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:hint="Password"
             android:layout_marginTop="16dp"
-            android:ems="10"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/btn_sign"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/et_login"
-            app:layout_constraintVertical_bias="0.0"
             android:background="@drawable/round_shape"
-            android:paddingLeft="10dp"
+            android:ems="10"
+            android:hint="Password"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
             android:paddingStart="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:text="@={viewModel.password}"
             android:textColor="@color/color_onSurface"
             android:textColorHint="@color/color_unselectedWhite"
-            android:importantForAutofill="no" />
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/et_email"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/btn_sign"
@@ -111,36 +140,35 @@
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:background="@drawable/round_button"
+            android:clickable="@{viewModel.isLoading ? false : true}"
+            android:onClick="@{() -> viewModel.refresh()}"
             android:text="Sign up"
+            android:textColor="@color/color_onPrimary"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/et_login"
-            app:layout_constraintVertical_bias="0.65"
-            android:background="@drawable/round_button"
-            android:textColor="@color/color_onPrimary"
 
-            android:onClick="@{() -> viewModel.refresh()}"
-            android:clickable="@{viewModel.isLoading ? false : true}" />
+            app:layout_constraintTop_toBottomOf="@+id/et_login"
+            app:layout_constraintVertical_bias="0.65" />
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/btn_sign"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_password"
 
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
+            app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.text}"
             android:textColor="@color/color_unselectedWhite"
             app:layout_constraintBottom_toTopOf="@+id/btn_sign"
             app:layout_constraintEnd_toEndOf="parent"
