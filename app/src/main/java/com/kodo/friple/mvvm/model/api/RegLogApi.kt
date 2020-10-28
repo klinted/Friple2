@@ -13,11 +13,11 @@ interface RegLogApi {
     @POST("reg")
     fun regUser(@Field("login")login: String,
                 @Field("email")email: String,
-                @Field("password")password: String): Call<ResponseApi.RegistrationResponse>
+                @Field("password")password: String): Call<ResponseApi>
 
     @FormUrlEncoded
     @POST("log")
     fun logUser(@Field("login")login: String,
-                @Field("password")password: String,): Call<ResponseApi.LoginResponse>
+                @Field("password")password: String,): Call<ResponseApi>
 
 }

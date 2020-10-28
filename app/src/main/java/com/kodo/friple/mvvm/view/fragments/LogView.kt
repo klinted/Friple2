@@ -9,31 +9,31 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.kodo.friple.R
-import com.kodo.friple.databinding.RegScreenBinding
+import com.kodo.friple.databinding.LogScreenBinding
 import com.kodo.friple.mvvm.viewmodel.RegLogViewModel
 
-class RegView: Fragment() {
+class LogView: Fragment() {
 
     lateinit var mRegLogViewModel: RegLogViewModel
-    lateinit var binding: RegScreenBinding
+    lateinit var binding: LogScreenBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.reg_screen, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.log_screen, container, false)
         mRegLogViewModel = ViewModelProvider(this).get(RegLogViewModel::class.java)
         binding.viewModel = mRegLogViewModel
         binding.executePendingBindings()
 
-        return  binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mRegLogViewModel.snackBarStatus.observe(viewLifecycleOwner, { status ->
+        mRegLogViewModel.snackBarStatus.observe(viewLifecycleOwner,  { status ->
             status?.let {
                 mRegLogViewModel.snackBarStatus.value = null
                 Snackbar.make(view,
@@ -42,4 +42,5 @@ class RegView: Fragment() {
             }
         })
     }
+
 }
