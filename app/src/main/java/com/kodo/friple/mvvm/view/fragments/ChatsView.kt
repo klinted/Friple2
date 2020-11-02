@@ -11,10 +11,11 @@ import com.kodo.friple.R
 import com.kodo.friple.databinding.ChatsScreenBinding
 import com.kodo.friple.mvvm.common.message.MessageData
 import com.kodo.friple.mvvm.common.message.messageAdapter
+import com.kodo.friple.mvvm.viewmodel.BaseViewModel
 import com.kodo.friple.mvvm.viewmodel.ChatsViewModel
 import kotlinx.android.synthetic.main.chats_screen.*
 
-class ChatsView: Fragment() {
+class ChatsView: BaseView() {
 
     lateinit var mChatsViewModel: ChatsViewModel
     lateinit var binding: ChatsScreenBinding
@@ -58,4 +59,14 @@ class ChatsView: Fragment() {
         }
     }
 
+    companion object {
+
+        fun newInstance(instance: Int): ChatsView {
+            val args = Bundle()
+            args.putInt(BaseView.ARGS_INSTANCE, instance)
+            val fragment = ChatsView()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 }
