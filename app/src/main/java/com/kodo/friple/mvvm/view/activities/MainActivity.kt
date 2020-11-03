@@ -3,7 +3,6 @@ package com.kodo.friple.mvvm.view.activities
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.kodo.friple.R
-import com.kodo.friple.mvvm.view.fragments.BaseView
 import com.kodo.friple.mvvm.view.fragments.ChatsView
 import com.kodo.friple.mvvm.view.fragments.HomeView
 import com.kodo.friple.mvvm.view.fragments.ProfileView
@@ -28,8 +26,7 @@ const val INDEX_CHATS = FragNavController.TAB2
 const val INDEX_PROFILE = FragNavController.TAB3
 
 class MainActivity : AppCompatActivity(), FragNavController.RootFragmentListener,
-    BottomNavigationBar.OnTabSelectedListener, FragNavController.TransactionListener,
-    BaseView.FragmentNavigation{
+    BottomNavigationBar.OnTabSelectedListener, FragNavController.TransactionListener{
 
     private val fragNavController: FragNavController = FragNavController(
         supportFragmentManager,
@@ -90,15 +87,9 @@ class MainActivity : AppCompatActivity(), FragNavController.RootFragmentListener
 
     override fun onTabSelected(position: Int) {
         when(position){
-            0 -> {
-                fragNavController.switchTab(INDEX_HOME); Log.d("LOG", "home")
-            }
-            1 -> {
-                fragNavController.switchTab(INDEX_CHATS); Log.d("LOG", "chats")
-            }
-            2 -> {
-                fragNavController.switchTab(INDEX_PROFILE); Log.d("LOG", "profile")
-            }
+            0 -> fragNavController.switchTab(INDEX_HOME)
+            1 -> fragNavController.switchTab(INDEX_CHATS)
+            2 -> fragNavController.switchTab(INDEX_PROFILE)
         }
     }
 
@@ -128,18 +119,6 @@ class MainActivity : AppCompatActivity(), FragNavController.RootFragmentListener
 
     override fun onTabTransaction(fragment: Fragment?, index: Int) {
         supportActionBar?.setDisplayHomeAsUpEnabled(fragNavController.isRootFragment.not())
-    }
-
-    override fun pushFragment(fragment: Fragment, sharedElementList: List<Pair<View, String>>?) {
-        val options = FragNavTransactionOptions.newBuilder()
-        options.reordering = true
-        sharedElementList?.let {
-            it.forEach { pair ->
-                options.addSharedElement(pair)
-            }
-        }
-        fragNavController.pushFragment(fragment, options.build())
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -11,8 +11,6 @@ import com.kodo.friple.R
 
 open class BaseView : Fragment() {
 
-    lateinit var btn: Button
-    lateinit var mFragmentNavigation: FragmentNavigation
     internal var mInt = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,17 +19,6 @@ open class BaseView : Fragment() {
         if (args != null) {
             mInt = args.getInt(ARGS_INSTANCE)
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is FragmentNavigation) {
-            mFragmentNavigation = context
-        }
-    }
-
-    interface FragmentNavigation {
-        fun pushFragment(fragment: Fragment, sharedElementList: List<Pair<View, String>>?= null)
     }
 
     companion object {
