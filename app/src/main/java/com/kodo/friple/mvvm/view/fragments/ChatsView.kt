@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.kodo.friple.R
 import com.kodo.friple.databinding.ChatsScreenBinding
 import com.kodo.friple.mvvm.common.message.MessageData
 import com.kodo.friple.mvvm.common.message.messageAdapter
-import com.kodo.friple.mvvm.viewmodel.BaseViewModel
 import com.kodo.friple.mvvm.viewmodel.ChatsViewModel
 import kotlinx.android.synthetic.main.chats_screen.*
 

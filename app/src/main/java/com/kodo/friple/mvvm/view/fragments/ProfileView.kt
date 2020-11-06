@@ -1,6 +1,7 @@
 package com.kodo.friple.mvvm.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.kodo.friple.R
-import com.kodo.friple.databinding.ChatsScreenBinding
 import com.kodo.friple.databinding.ProfileScreenBinding
+import com.kodo.friple.mvvm.view.activities.MainActivity
 import com.kodo.friple.mvvm.viewmodel.ProfileViewModel
+import kotlinx.android.synthetic.main.profile_screen.*
 
 class ProfileView: Fragment() {
 
@@ -18,7 +20,7 @@ class ProfileView: Fragment() {
     lateinit var binding: ProfileScreenBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater,
+        inflater : LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -28,5 +30,9 @@ class ProfileView: Fragment() {
         binding.executePendingBindings()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 }
