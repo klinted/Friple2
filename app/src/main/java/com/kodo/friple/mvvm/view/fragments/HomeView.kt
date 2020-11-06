@@ -28,16 +28,4 @@ class HomeView: Fragment() {
 
         return binding.root
     }
-
-    companion object {
-
-        fun newInstance(instance: Int): HomeView {
-            val args = Bundle()
-            args.putInt(BaseView.ARGS_INSTANCE, instance)
-            val fragment = HomeView()
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
 }

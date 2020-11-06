@@ -29,16 +29,4 @@ class ProfileView: Fragment() {
 
         return binding.root
     }
-
-    companion object {
-
-        fun newInstance(instance: Int): ProfileView {
-            val args = Bundle()
-            args.putInt(BaseView.ARGS_INSTANCE, instance)
-            val fragment = ProfileView()
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
 }
