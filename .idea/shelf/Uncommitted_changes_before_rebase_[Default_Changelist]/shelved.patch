@@ -1,0 +1,17 @@
+Index: app/src/main/java/com/kodo/friple/mvvm/view/fragments/ChatsView.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.kodo.friple.mvvm.view.fragments\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.databinding.DataBindingUtil\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport com.kodo.friple.R\r\nimport com.kodo.friple.databinding.ChatsScreenBinding\r\nimport com.kodo.friple.mvvm.common.message.MessageData\r\nimport com.kodo.friple.mvvm.common.message.messageAdapter\r\nimport com.kodo.friple.mvvm.viewmodel.ChatsViewModel\r\nimport kotlinx.android.synthetic.main.chats_screen.*\r\n\r\nclass ChatsView: Fragment() {\r\n\r\n    lateinit var mChatsViewModel: ChatsViewModel\r\n    lateinit var binding: ChatsScreenBinding\r\n\r\n    private var messages = mutableListOf<MessageData>()\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater,\r\n        container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        binding = DataBindingUtil.inflate(inflater, R.layout.chats_screen, container,false)\r\n        mChatsViewModel = ViewModelProvider(this).get(ChatsViewModel::class.java)\r\n        binding.viewModel = mChatsViewModel\r\n        binding.executePendingBindings()\r\n\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        messages.add(MessageData(R.drawable.ic_profile, \"Nick\", \"You: Hi bud!\", \"5:55 PM\"))\r\n        messages.add(MessageData(R.drawable.ic_profile, \"Dan\", \"What's up?\", \"4:47 PM\"))\r\n        messages.add(MessageData(R.drawable.ic_profile, \"Kris\", \"You: I love u babe!\", \"4:40 PM\"))\r\n        messages.add(MessageData(R.drawable.ic_profile, \"Vas\", \"Be in touch\", \"3:20 PM\"))\r\n        messages.add(MessageData(R.drawable.ic_profile, \"Richard\", \"Ok\", \"2:17 PM\"))\r\n        messages.add(MessageData(R.drawable.ic_profile, \"Ron\", \"You: Hahhah\", \"OCT 22\"))\r\n        messages.add(MessageData(R.drawable.ic_profile, \"Gerry\", \"You: I don't think so\", \"OCT 22\"))\r\n        messages.add(MessageData(R.drawable.ic_profile, \"Bob\", \"Good luck\", \"AUG 17\"))\r\n        messages.add(MessageData(R.drawable.ic_profile, \"Stan\", \"Hey\", \"AUG 11\"))\r\n\r\n        epoxy_recycler_view.withModels {\r\n            messages.forEach{\r\n                messageAdapter{\r\n                    id(hashCode())\r\n                    image(it.image)\r\n                    name(it.name)\r\n                    message(it.message)\r\n                    time(it.time)\r\n                }\r\n            }\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/kodo/friple/mvvm/view/fragments/ChatsView.kt	(revision 3d9cadcb53e60013752707abc7ca249c58334c10)
++++ app/src/main/java/com/kodo/friple/mvvm/view/fragments/ChatsView.kt	(date 1604666718856)
+@@ -5,6 +5,7 @@
+ import android.view.View
+ import android.view.ViewGroup
+ import androidx.databinding.DataBindingUtil
++import androidx.fragment.app.Fragment
+ import androidx.lifecycle.ViewModelProvider
+ import com.kodo.friple.R
+ import com.kodo.friple.databinding.ChatsScreenBinding
