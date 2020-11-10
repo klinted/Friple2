@@ -1,6 +1,11 @@
 package com.kodo.friple.mvvm.viewmodel
 
-import androidx.lifecycle.ViewModel
+import com.github.terrakok.cicerone.Router
 
-class HomeViewModel: ViewModel() {
+class HomeViewModel(val router: Router) : BaseViewModel() {
+
+
+    fun onBackPressed() {
+        router.exit()
+    }
 }

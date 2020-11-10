@@ -37,9 +37,9 @@ class LogController : Callback<ResponseApi> {
         Log.d("LoginController", "onResponse method")
         Log.d("LoginController", "Response body: ${response.body()}")
         when (response.code()) {
-            200 -> successfullyLog(response.body())
-            401 -> unsuccessfullyLog(response.body())
-            404 -> logError(response.body())
+            200 -> successfullyLog()
+            401 -> unsuccessfullyLog()
+            404 -> logError()
         }
     }
 
@@ -47,25 +47,22 @@ class LogController : Callback<ResponseApi> {
 
     }
 
-    private fun successfullyLog(body: ResponseApi?) {
-        Log.d("LoginController", "${body?.message} Status: ${body?.status}")
+    private fun successfullyLog() {
         responseMessage = "Welcome $login!"
-        iResponseCallBack.responseDataReady(true, responseMessage)
+        iResponseCallBack.responseDataReady(true, responseMessage, login)
     }
 
-    private fun unsuccessfullyLog(body: ResponseApi?) {
-        Log.d("LoginController", "${body?.message} Status: ${body?.status}")
+    private fun unsuccessfullyLog() {
         responseMessage = "The login details are incorrect!"
-        iResponseCallBack.responseDataReady(false, responseMessage)
+        iResponseCallBack.responseDataReady(false, responseMessage, login)
     }
 
-    private fun logError(body: ResponseApi?) {
-        Log.d("LoginController", "${body?.message} Status: ${body?.status}")
+    private fun logError() {
         responseMessage = "Something is wrong! Please try again later."
-        iResponseCallBack.responseDataReady(false, responseMessage)
+        iResponseCallBack.responseDataReady(false, responseMessage, login)
     }
 
     interface ResponseLogCallBack {
-        fun responseDataReady(regStatus: Boolean, responseMessage: String)
+        fun responseDataReady(regStatus: Boolean, responseMessage: String, login: String)
     }
 }

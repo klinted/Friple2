@@ -12,6 +12,7 @@ class RegistrationController : Callback<ResponseApi> {
 
     private lateinit var iResponseCallBack: ResponseRegCallBack
 
+
     lateinit var login: String
     lateinit var email: String
     lateinit var password: String
@@ -52,22 +53,22 @@ class RegistrationController : Callback<ResponseApi> {
     private fun userExists(body: ResponseApi?) {
         Log.d("RegistrationController", "${body?.message} Status: ${body?.status}")
         responseMessage = "User with $login already exists!"
-        iResponseCallBack.responseDataReady(false, responseMessage)
+        iResponseCallBack.responseDataReady(false, responseMessage, login)
     }
 
     private fun userWasReg(body: ResponseApi?) {
         Log.d("RegistrationController", "${body?.message} Status: ${body?.status}")
         responseMessage = "Nice to meet you $login!"
-        iResponseCallBack.responseDataReady(true, responseMessage)
+        iResponseCallBack.responseDataReady(true, responseMessage, login)
     }
 
     private fun regErrors(body: ResponseApi?) {
         Log.d("RegistrationController", "${body?.message} Status: ${body?.status}")
         responseMessage = "Something is wrong! Please try again later."
-        iResponseCallBack.responseDataReady(false, responseMessage)
+        iResponseCallBack.responseDataReady(false, responseMessage, login)
     }
 
     interface ResponseRegCallBack {
-        fun responseDataReady(regStatus: Boolean, responseMessage: String)
+        fun responseDataReady(regStatus: Boolean, responseMessage: String, login: String)
     }
 }

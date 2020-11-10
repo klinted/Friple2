@@ -68,6 +68,11 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.29.1'
 
     // Bottom navigation
-    implementation 'com.ncapdevi:frag-nav:3.3.0'
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
+
+    // Cicerone
+    implementation "com.github.terrakok:cicerone:6.4"
+
+    // Progress Button Android
+    implementation 'br.com.simplepass:loading-button-android:2.2.0'
 }

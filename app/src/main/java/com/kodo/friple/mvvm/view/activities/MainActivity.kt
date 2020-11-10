@@ -1,76 +1,54 @@
 package com.kodo.friple.mvvm.view.activities
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
+import com.github.terrakok.cicerone.Router
 import com.kodo.friple.R
-import com.kodo.friple.mvvm.view.fragments.ChatsView
-import com.kodo.friple.mvvm.view.fragments.HomeView
-import com.kodo.friple.mvvm.view.fragments.ProfileView
-import com.ncapdevi.fragnav.FragNavController
-import com.ncapdevi.fragnav.FragNavLogger
-import com.ncapdevi.fragnav.FragNavSwitchController
-import com.ncapdevi.fragnav.FragNavTransactionOptions
-import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
+import com.kodo.friple.databinding.ActivityMainBinding
+import com.kodo.friple.mvvm.common.MyViewModelFactory
+import com.kodo.friple.mvvm.common.SampleApplication
+import com.kodo.friple.mvvm.common.Screens.Tab
+import com.kodo.friple.mvvm.common.navigation.BackButtonListener
+import com.kodo.friple.mvvm.common.navigation.RouterProvider
+import com.kodo.friple.mvvm.viewmodel.BaseViewModel
+import com.kodo.friple.mvvm.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
+class MainActivity : AppCompatActivity(), RouterProvider{
 
-const val INDEX_HOME = FragNavController.TAB1
-const val INDEX_CHATS = FragNavController.TAB2
-const val INDEX_PROFILE = FragNavController.TAB3
+    lateinit var mActivityMainViewModel: MainActivityViewModel
 
-class MainActivity : AppCompatActivity(), FragNavController.RootFragmentListener,
-    BottomNavigationBar.OnTabSelectedListener, FragNavController.TransactionListener{
+    lateinit var binding: ActivityMainBinding
 
-    private val fragNavController: FragNavController = FragNavController(
-        supportFragmentManager,
-        R.id.fragment_container
-    )
-
-    override val numberOfRootFragments: Int = 3
+    @Inject
+    override lateinit var router: Router
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        SampleApplication.INSTANCE.appComponent.inject(this)
+
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        val viewModelFactory = MyViewModelFactory(router)
+        mActivityMainViewModel = ViewModelProvider(this, viewModelFactory)
+            .get(MainActivityViewModel::class.java)
+
+        binding.viewModel = mActivityMainViewModel
 
         initBottomBar()
-
-        fragNavController.apply {
-            transactionListener = this@MainActivity
-            rootFragmentListener = this@MainActivity
-            createEager = true
-
-            fragNavLogger = object : FragNavLogger {
-                override fun error(message: String, throwable: Throwable) {
-                    Log.e("MainActivity", message, throwable)
-                }
-            }
-
-            fragmentHideStrategy = FragNavController.DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
-
-            navigationStrategy = UniqueTabHistoryStrategy(object : FragNavSwitchController {
-                override fun switchTab(index: Int, transactionOptions: FragNavTransactionOptions?) {
-                    bottom_navigation.selectTab(index)
-                }
-            })
-        }
-
-        fragNavController.initialize(INDEX_HOME, savedInstanceState)
-
-        val initial = savedInstanceState == null
-        if (initial) {
-            bottom_navigation.selectTab(INDEX_HOME)
+        if (savedInstanceState == null) {
+            bottom_navigation.selectTab(0, true)
         }
     }
 
     private fun initBottomBar() {
-        bottom_navigation.setTabSelectedListener(this)
 
         bottom_navigation
             .addItem(BottomNavigationItem(R.drawable.ic_home, "Home"))
@@ -79,53 +57,82 @@ class MainActivity : AppCompatActivity(), FragNavController.RootFragmentListener
             .setFirstSelectedPosition(0)
             .setBarBackgroundColor(R.color.color_surface)
             .initialise()
+
+        bottom_navigation.setTabSelectedListener(object: BottomNavigationBar.OnTabSelectedListener{
+            override fun onTabSelected(position: Int) {
+                when (position) {
+                    0 -> selectTab("HOME")
+                    1 -> selectTab("CHATS")
+                    2 -> selectTab("PROFILE")
+                }
+                bottom_navigation.selectTab(position, false)
+            }
+
+            override fun onTabUnselected(position: Int) {}
+
+            override fun onTabReselected(position: Int) {
+                onTabSelected(position)
+            }
+        })
     }
 
-    override fun onTabSelected(position: Int) {
-        when(position){
-            0 -> fragNavController.switchTab(INDEX_HOME)
-            1 -> fragNavController.switchTab(INDEX_CHATS)
-            2 -> fragNavController.switchTab(INDEX_PROFILE)
+    private fun selectTab(tab: String){
+        val fm = supportFragmentManager
+        var currentFragment: Fragment? = null
+        val fragments = fm.fragments
+
+        Log.d("fff", "fragments: $fragments")
+
+        for (f in fragments) {
+            if (f.isVisible) {
+                currentFragment = f
+                break
+            }
         }
-    }
 
-    override fun onTabUnselected(position: Int) {
-    }
+        val newFragment = fm.findFragmentByTag(tab)
 
-    override fun onTabReselected(position: Int) {
-        fragNavController.clearStack()
-    }
+        Log.d("fff", "new fragment: $newFragment")
 
-    override fun getRootFragment(index: Int): Fragment {
-        when(index){
-            INDEX_HOME -> return HomeView()
-            INDEX_CHATS -> return ChatsView()
-            INDEX_PROFILE -> return ProfileView()
+        if (currentFragment != null && newFragment != null && currentFragment === newFragment) return
+
+        val transaction = fm.beginTransaction()
+
+        if (newFragment == null) {
+            transaction.add(
+                R.id.fragment_container,
+                Tab(tab).createFragment(fm.fragmentFactory), tab
+            )
         }
-        throw IllegalStateException("Index: $index")
-    }
 
-    override fun onFragmentTransaction(
-        fragment: Fragment?,
-        transactionType: FragNavController.TransactionType
-    ) {
-        supportActionBar?.setDisplayHomeAsUpEnabled(fragNavController.isRootFragment.not())
-    }
+        if (currentFragment != null) {
+            transaction.hide(currentFragment)
+        }
 
-    override fun onTabTransaction(fragment: Fragment?, index: Int) {
-        supportActionBar?.setDisplayHomeAsUpEnabled(fragNavController.isRootFragment.not())
-    }
+        if (newFragment != null) {
+            transaction.show(newFragment)
+        }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        fragNavController.onSaveInstanceState(outState)
-
+        transaction.commitNow()
     }
 
     override fun onBackPressed() {
-        if (fragNavController.popFragment().not()) {
-            super.onBackPressed()
+        val fm = supportFragmentManager
+        var fragment: Fragment? = null
+        val fragments = fm.fragments
+        for (f in fragments) {
+            if (f.isVisible) {
+                fragment = f
+                break
+            }
+        }
+        if (fragment != null && fragment is BackButtonListener
+            && (fragment as BackButtonListener).onBackPressed()) {
+            return
+        } else {
+            mActivityMainViewModel.onBackPressed()
         }
     }
+
 }
 

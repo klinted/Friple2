@@ -12,8 +12,10 @@
     <color name="color_onSecondary">#ffffff</color>
     <color name="color_selectedWhite">#ffffff</color>
     <color name="color_unselectedWhite">#757575</color>
+    <color name="color_unselectedWhite2">#939393</color>
 
     <color name="color_invisible">#00000000</color>
     <color name="color_half_black">#80000000</color>
+    <color name="color_stroke">#464C51</color>
 
 </resources>

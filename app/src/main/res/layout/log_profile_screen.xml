@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".mvvm.view.fragments.HomeView">
+    tools:context=".mvvm.view.fragments.LogProfileView">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.kodo.friple.mvvm.viewmodel.HomeViewModel" />
+            type="com.kodo.friple.mvvm.viewmodel.LogProfileViewModel" />
 
     </data>
 
@@ -17,44 +17,67 @@
         android:layout_height="match_parent"
         android:background="@color/color_background">
 
-
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline17"
+            android:id="@+id/guideline9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="16dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline18"
+            android:id="@+id/guideline10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_end="16dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline19"
+            android:id="@+id/guideline11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="16dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline20"
+            android:id="@+id/guideline16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_end="16dp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home"
+            android:text="Profile"
             android:textColor="@color/color_onBackground"
             android:textSize="36sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline19"
-            app:layout_constraintTop_toTopOf="@+id/guideline17" />
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+        <Button
+            android:id="@+id/btn_to_log_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Log"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+
+            android:onClick="@{() -> viewModel.toLogScreen()}"/>
+
+        <Button
+            android:id="@+id/btn_to_reg_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Reg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_to_log_screen"
+
+            android:onClick="@{() -> viewModel.toRegScreen()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,6 +1,7 @@
 package com.kodo.friple.mvvm.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.kodo.friple.R
 import com.kodo.friple.databinding.ChatsScreenBinding
+import com.kodo.friple.mvvm.common.MyViewModelFactory
 import com.kodo.friple.mvvm.common.message.MessageData
 import com.kodo.friple.mvvm.common.message.messageAdapter
+import com.kodo.friple.mvvm.common.navigation.BackButtonListener
+import com.kodo.friple.mvvm.common.navigation.RouterProvider
 import com.kodo.friple.mvvm.viewmodel.ChatsViewModel
 import kotlinx.android.synthetic.main.chats_screen.*
 
-class ChatsView: Fragment() {
+class ChatsView: Fragment(), BackButtonListener {
 
     lateinit var mChatsViewModel: ChatsViewModel
     lateinit var binding: ChatsScreenBinding
@@ -27,7 +31,11 @@ class ChatsView: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.chats_screen, container,false)
-        mChatsViewModel = ViewModelProvider(this).get(ChatsViewModel::class.java)
+
+        val viewModelFactory = MyViewModelFactory((parentFragment as RouterProvider).router)
+        mChatsViewModel = ViewModelProvider(this, viewModelFactory)
+            .get(ChatsViewModel::class.java)
+
         binding.viewModel = mChatsViewModel
         binding.executePendingBindings()
 
@@ -53,6 +61,25 @@ class ChatsView: Fragment() {
                     name(it.name)
                     message(it.message)
                     time(it.time)
+                }
+            }
+        }
+    }
+
+    override fun onBackPressed(): Boolean {
+        mChatsViewModel.onBackPressed()
+        return true
+    }
+
+    companion object {
+        private const val EXTRA_NAME = "extra_name"
+        private const val EXTRA_NUMBER = "extra_number"
+
+        fun getNewInstance(name: String?, number: Int): ChatsView {
+            return ChatsView().apply {
+                arguments = Bundle().apply {
+                    putString(EXTRA_NAME, name)
+                    putInt(EXTRA_NUMBER, number)
                 }
             }
         }
