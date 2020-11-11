@@ -8,6 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.core.ImagePipelineConfig
+import com.facebook.imagepipeline.core.ImageTranscoderType
+import com.facebook.imagepipeline.core.MemoryChunkType
 import com.github.terrakok.cicerone.Router
 import com.kodo.friple.R
 import com.kodo.friple.databinding.ActivityMainBinding
@@ -16,7 +20,6 @@ import com.kodo.friple.mvvm.common.SampleApplication
 import com.kodo.friple.mvvm.common.Screens.Tab
 import com.kodo.friple.mvvm.common.navigation.BackButtonListener
 import com.kodo.friple.mvvm.common.navigation.RouterProvider
-import com.kodo.friple.mvvm.viewmodel.BaseViewModel
 import com.kodo.friple.mvvm.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity(), RouterProvider{
         binding.viewModel = mActivityMainViewModel
 
         initBottomBar()
+
         if (savedInstanceState == null) {
             bottom_navigation.selectTab(0, true)
         }
@@ -58,7 +62,8 @@ class MainActivity : AppCompatActivity(), RouterProvider{
             .setBarBackgroundColor(R.color.color_surface)
             .initialise()
 
-        bottom_navigation.setTabSelectedListener(object: BottomNavigationBar.OnTabSelectedListener{
+        bottom_navigation.setTabSelectedListener(object :
+            BottomNavigationBar.OnTabSelectedListener {
             override fun onTabSelected(position: Int) {
                 when (position) {
                     0 -> selectTab("HOME")

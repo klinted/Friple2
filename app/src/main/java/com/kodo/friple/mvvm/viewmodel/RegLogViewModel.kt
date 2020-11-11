@@ -3,14 +3,14 @@ package com.kodo.friple.mvvm.viewmodel
 import android.content.Context
 import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.FragmentActivity
 import com.github.terrakok.cicerone.Router
 import com.kodo.friple.apputil.AppConfig
 import com.kodo.friple.mvvm.common.Screens.Profile
 import com.kodo.friple.mvvm.model.data.RegLogData
 import com.kodo.friple.mvvm.model.models.RegLogModel
 import com.kodo.friple.mvvm.model.models.RegLogModel.OnDataReadyCallback
-import java.util.logging.Handler
+import com.kodo.friple.mvvm.view.activities.MainActivity
 
 class RegLogViewModel(val router: Router, val context: Context): BaseViewModel() {
 
@@ -89,4 +89,10 @@ class RegLogViewModel(val router: Router, val context: Context): BaseViewModel()
     fun onBackPressed() {
         router.exit()
     }
+
+    override fun onCleared() {
+        hideBottomNavigation.value = false
+        super.onCleared()
+    }
+
 }

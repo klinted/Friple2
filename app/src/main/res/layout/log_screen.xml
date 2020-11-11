@@ -6,8 +6,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="com.kodo.friple.mvvm.viewmodel.RegLogViewModel" />
@@ -59,6 +57,17 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How is it going?"
+            android:textColor="@color/color_unselectedWhite"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/tv_registration" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -129,18 +138,18 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             app:spinning_bar_color="@color/color_surface2"
             app:spinning_bar_padding="6dp"
-            app:spinning_bar_width="4dp" />
+            app:spinning_bar_width="4dp"/>
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="How is it going?"
-            android:textColor="@color/color_unselectedWhite"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/round_shape"
+            android:onClick="@{() -> viewModel.onBackPressed()}"
+            android:src="@drawable/ic_close"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/tv_registration" />
+            app:layout_constraintTop_toTopOf="@+id/guideline7"
+            android:contentDescription="Back" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

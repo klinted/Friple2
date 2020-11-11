@@ -21,6 +21,7 @@ import com.kodo.friple.mvvm.common.MyViewModelFactory
 import com.kodo.friple.mvvm.common.navigation.BackButtonListener
 import com.kodo.friple.mvvm.common.navigation.RouterProvider
 import com.kodo.friple.mvvm.viewmodel.RegLogViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.log_screen.*
 import kotlinx.android.synthetic.main.reg_screen.*
 
@@ -53,10 +54,12 @@ class RegView: Fragment(), BackButtonListener, TextWatcher{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.bottom_navigation?.hide()
+        btn_sign_up.isClickable = false
+
         et_reg_login.addTextChangedListener(this)
         et_reg_email.addTextChangedListener(this)
         et_reg_password.addTextChangedListener(this)
-
 
         mRegLogViewModel.snackBarStatus.observe(viewLifecycleOwner, { status ->
             status?.let {
@@ -75,25 +78,26 @@ class RegView: Fragment(), BackButtonListener, TextWatcher{
 
                     handler.postDelayed({
                         mRegLogViewModel.openProfile()
-                    }, 1000)
+                    }, 2000)
                 } else {
                     btn_sign_up.doneLoadingAnimation(
                         ContextCompat.getColor(context!!, R.color.color_primary),
                         Bitmap.createBitmap(
-                            BitmapFactory.decodeResource(resources, R.drawable.ic_x)
+                            BitmapFactory.decodeResource(resources, R.drawable.ic_error)
                         )
                     )
 
                     handler.postDelayed({
-                        btn_sign_up.revertAnimation {
-                            btn_sign_in.setBackgroundResource(R.drawable.active_button)
+                        btn_sign_up?.revertAnimation {
+                            btn_sign_in?.setBackgroundResource(R.drawable.active_button)
                         }
                     }, 2000)
                 }
 
                 Snackbar.make(view,
                     "${mRegLogViewModel.message.value}",
-                    Snackbar.LENGTH_LONG).show()
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         })
 
@@ -125,6 +129,11 @@ class RegView: Fragment(), BackButtonListener, TextWatcher{
     override fun onBackPressed(): Boolean {
         mRegLogViewModel.onBackPressed()
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.bottom_navigation?.show()
     }
 
     companion object {

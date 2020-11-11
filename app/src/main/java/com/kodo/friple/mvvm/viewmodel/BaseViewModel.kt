@@ -12,6 +12,8 @@ open class BaseViewModel: ViewModel(){
     val snackBarStatus = MutableLiveData<Boolean?>()
     val animate = MutableLiveData<Boolean?>()
     val message = MutableLiveData<String>()
+    val hideBottomNavigation = MutableLiveData<Boolean?>()
 
     val isLoading = ObservableField<Boolean>()
+
 }

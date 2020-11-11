@@ -31,6 +31,7 @@ class LogProfileView: Fragment(), BackButtonListener {
         mLogProfileViewModel = ViewModelProvider(this, viewModelFactory)
             .get(LogProfileViewModel::class.java)
 
+
         binding.viewModel = mLogProfileViewModel
         binding.executePendingBindings()
 

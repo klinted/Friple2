@@ -1,17 +1,15 @@
 package com.kodo.friple.mvvm.view.fragments
 
 import android.graphics.*
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +21,7 @@ import com.kodo.friple.mvvm.common.MyViewModelFactory
 import com.kodo.friple.mvvm.common.navigation.BackButtonListener
 import com.kodo.friple.mvvm.common.navigation.RouterProvider
 import com.kodo.friple.mvvm.viewmodel.RegLogViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.log_screen.*
 
 
@@ -56,6 +55,9 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.bottom_navigation?.hide()
+        btn_sign_in.isClickable = false
+
         et_login.addTextChangedListener(this)
         et_password.addTextChangedListener(this)
 
@@ -76,18 +78,18 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
 
                     handler.postDelayed({
                         mRegLogViewModel.openProfile()
-                    }, 1000)
+                    }, 2000)
                 } else {
                     btn_sign_in.doneLoadingAnimation(
                         ContextCompat.getColor(context!!, R.color.color_primary),
                         Bitmap.createBitmap(
-                            BitmapFactory.decodeResource(resources, R.drawable.ic_x)
+                            BitmapFactory.decodeResource(resources, R.drawable.ic_error)
                         )
                     )
 
                     handler.postDelayed({
-                        btn_sign_in.revertAnimation {
-                            btn_sign_in.setBackgroundResource(R.drawable.active_button)
+                        btn_sign_in?.revertAnimation {
+                            btn_sign_in?.setBackgroundResource(R.drawable.active_button)
                         }
                     }, 2000)
                 }
@@ -95,7 +97,7 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
                 Snackbar.make(
                     view,
                     "${mRegLogViewModel.message.value}",
-                    Snackbar.LENGTH_LONG
+                    Snackbar.LENGTH_SHORT
                 ).show()
             }
         })
@@ -128,6 +130,11 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
     override fun onBackPressed(): Boolean {
         mRegLogViewModel.onBackPressed()
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activity?.bottom_navigation?.show()
     }
 
     companion object {

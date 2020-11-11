@@ -4,8 +4,6 @@
     tools:context=".mvvm.view.fragments.RegView">
 
     <data>
-        
-        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -75,9 +73,9 @@
             android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="1dp"
             android:background="@drawable/log_reg_edittext_shape"
             android:orientation="vertical"
+            android:padding="1dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -98,7 +96,7 @@
                 android:paddingRight="10dp"
                 android:text="@={viewModel.login}"
                 android:textColor="@color/color_onSurface"
-                android:textColorHint="@color/color_unselectedWhite"/>
+                android:textColorHint="@color/color_unselectedWhite" />
 
             <View
                 android:layout_width="match_parent"
@@ -120,7 +118,7 @@
                 android:paddingRight="10dp"
                 android:text="@={viewModel.email}"
                 android:textColor="@color/color_onSurface"
-                android:textColorHint="@color/color_unselectedWhite"/>
+                android:textColorHint="@color/color_unselectedWhite" />
 
             <View
                 android:layout_width="match_parent"
@@ -166,6 +164,16 @@
             app:spinning_bar_color="@color/color_surface2"
             app:spinning_bar_padding="6dp"
             app:spinning_bar_width="4dp"/>
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="@{() -> viewModel.onBackPressed()}"
+            android:background="@drawable/round_shape"
+            android:src="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/guideline4"
+            android:contentDescription="Back" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
