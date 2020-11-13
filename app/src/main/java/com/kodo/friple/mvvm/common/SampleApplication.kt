@@ -1,18 +1,14 @@
 package com.kodo.friple.mvvm.common
 
 import android.app.Application
-import android.util.Log
 import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.core.ImagePipelineConfig
-import com.facebook.imagepipeline.core.ImageTranscoderType
-import com.facebook.imagepipeline.core.MemoryChunkType
-import com.kodo.friple.dagger.components.AppComponent
-import com.kodo.friple.dagger.components.DaggerAppComponent
+import com.kodo.friple.dagger.components.NavigationComponent
+import com.kodo.friple.dagger.components.DaggerNavigationComponent
 
 class SampleApplication : Application() {
 
-    val appComponent: AppComponent by lazy {
-        DaggerAppComponent.builder().build()
+    val navigationComponent: NavigationComponent by lazy {
+        DaggerNavigationComponent.builder().build()
     }
 
     override fun onCreate() {

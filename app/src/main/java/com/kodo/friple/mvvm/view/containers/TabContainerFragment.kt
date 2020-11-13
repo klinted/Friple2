@@ -1,15 +1,11 @@
 package com.kodo.friple.mvvm.view.containers
 
-import android.app.Activity
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Forward
 import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.androidx.AppNavigator
@@ -45,7 +41,7 @@ class TabContainerFragment : Fragment(), RouterProvider, BackButtonListener {
         get() = arguments?.getString(EXTRA_NAME)!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        SampleApplication.INSTANCE.appComponent.inject(this)
+        SampleApplication.INSTANCE.navigationComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         mAppConfig = AppConfig(context!!)

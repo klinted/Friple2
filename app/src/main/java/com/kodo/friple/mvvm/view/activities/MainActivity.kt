@@ -8,10 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.core.ImagePipelineConfig
-import com.facebook.imagepipeline.core.ImageTranscoderType
-import com.facebook.imagepipeline.core.MemoryChunkType
 import com.github.terrakok.cicerone.Router
 import com.kodo.friple.R
 import com.kodo.friple.databinding.ActivityMainBinding
@@ -34,7 +30,7 @@ class MainActivity : AppCompatActivity(), RouterProvider{
     override lateinit var router: Router
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        SampleApplication.INSTANCE.appComponent.inject(this)
+        SampleApplication.INSTANCE.navigationComponent.inject(this)
 
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -56,9 +52,11 @@ class MainActivity : AppCompatActivity(), RouterProvider{
 
         bottom_navigation
             .addItem(BottomNavigationItem(R.drawable.ic_home, "Home"))
-            .addItem(BottomNavigationItem(R.drawable.ic_statistic, "Chats"))
+            .addItem(BottomNavigationItem(R.drawable.ic_chats, "Chats"))
             .addItem(BottomNavigationItem(R.drawable.ic_profile, "Profile"))
             .setFirstSelectedPosition(0)
+            .setActiveColor(R.color.color_selectedWhite)
+            .setInActiveColor(R.color.color_unselectedWhite)
             .setBarBackgroundColor(R.color.color_surface)
             .initialise()
 

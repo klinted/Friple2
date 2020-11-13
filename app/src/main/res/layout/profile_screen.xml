@@ -16,10 +16,12 @@
         android:background="@color/color_background">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:background="@drawable/profile_top_shape"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -28,6 +30,7 @@
                 android:id="@+id/imageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:background="@color/color_invisible"
                 android:src="@drawable/ic_settings"
                 app:layout_constraintBottom_toTopOf="@+id/first_name"
@@ -38,8 +41,9 @@
                 android:id="@+id/imageButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="8dp"
                 android:background="@color/color_invisible"
                 android:src="@drawable/ic_notifications"
                 app:layout_constraintBottom_toTopOf="@+id/first_name"
@@ -53,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="Klinted Star"
                 android:textColor="@color/color_onSurface"
                 android:textSize="36sp"
@@ -67,45 +72,69 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Developer"
-                android:textColor="@color/color_unselectedWhite"
-                android:textSize="18sp"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="5dp"
+                android:elevation="0dp"
+                android:fontFamily="sans-serif-medium"
+                android:padding="5dp"
+                android:text="@{viewModel.loginOfUser}"
+                android:textAllCaps="true"
+                android:textColor="@color/color_unselectedWhite2"
+                android:textSize="12sp"
+                app:drawableLeftCompat="@drawable/ic_share"
+                app:drawableStartCompat="@drawable/ic_share"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/first_name" />
 
             <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/my_image_view"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:id="@+id/iv_profile_photo"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:elevation="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:roundedCornerRadius="15dp"
-                app:roundingBorderColor="@color/color_secondary"
+                app:layout_constraintVertical_bias="0.75"
+                app:roundedCornerRadius="35dp"
+                app:roundingBorderColor="@color/color_primary"
                 app:roundingBorderPadding="4dp"
                 app:roundingBorderWidth="2dp"
-                fresco:placeholderImage="@drawable/round_shape" />
+                fresco:placeholderImage="@drawable/round_shape2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="LogOut"
-            android:textColor="@color/color_onPrimary"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{() -> viewModel.logOut()}"/>-->
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+            <include
+                layout="@layout/cards_items"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        <Button
+                    android:id="@+id/btn_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_button"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:text="LogOut"
+                    android:textColor="@color/color_onPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{() -> viewModel.logOut()}"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -81,4 +81,5 @@ dependencies {
 
     // Fresco
     implementation 'com.facebook.fresco:fresco:2.3.0'
+
 }

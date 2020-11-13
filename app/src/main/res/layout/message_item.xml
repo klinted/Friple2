@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_invisible">
+    android:background="@color/color_invisible"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_message"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:elevation="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:placeholderImage="@drawable/round_shape"/>
 
     <TextView
         android:id="@+id/tv_name"
@@ -24,36 +26,56 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif-medium"
         android:text="George"
         android:textColor="@color/color_onBackground"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/iv_message"
         app:layout_constraintTop_toTopOf="@+id/iv_message" />
 
+
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="4dp"
-        android:text="You: Hi bud!"
-        android:textColor="@color/color_unselectedWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_message"
-        app:layout_constraintStart_toEndOf="@+id/iv_message"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+        android:text="Hi bud!"
+        android:textColor="@color/color_unselectedWhite2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_time"
+        app:layout_constraintStart_toEndOf="@+id/tv_who_sent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/color_unselectedWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_message" />
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="1:49 AM"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="57m"
         android:textColor="@color/color_unselectedWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_message"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_name" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/tv_who_sent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_unselectedWhite"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="You:"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_message"
+        app:layout_constraintStart_toEndOf="@+id/iv_message" />
 
     <Button
         android:id="@+id/button"
@@ -65,4 +87,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

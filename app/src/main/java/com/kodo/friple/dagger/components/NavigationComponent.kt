@@ -2,6 +2,7 @@ package com.kodo.friple.dagger.components
 
 import com.kodo.friple.dagger.modules.LocalNavigationModule
 import com.kodo.friple.dagger.modules.NavigationModule
+import com.kodo.friple.mvvm.common.message.MessageAdapterModel
 import com.kodo.friple.mvvm.view.activities.MainActivity
 import com.kodo.friple.mvvm.view.containers.TabContainerFragment
 import com.kodo.friple.mvvm.view.fragments.ChatsView
@@ -15,7 +16,7 @@ import javax.inject.Singleton
     NavigationModule::class,
     LocalNavigationModule::class]
 )
-interface AppComponent {
+interface NavigationComponent {
 
     fun inject(activity: MainActivity)
 

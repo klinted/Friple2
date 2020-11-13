@@ -1,5 +1,6 @@
 package com.kodo.friple.mvvm.view.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.kodo.friple.R
 import com.kodo.friple.databinding.ChatsScreenBinding
 import com.kodo.friple.mvvm.common.MyViewModelFactory
+import com.kodo.friple.mvvm.common.SampleApplication
 import com.kodo.friple.mvvm.common.message.MessageData
 import com.kodo.friple.mvvm.common.message.messageAdapter
 import com.kodo.friple.mvvm.common.navigation.BackButtonListener
@@ -43,24 +45,38 @@ class ChatsView: Fragment(), BackButtonListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        messages.add(MessageData(R.drawable.ic_profile, "Nick", "You: Hi bud!", "5:55 PM"))
-        messages.add(MessageData(R.drawable.ic_profile, "Dan", "What's up?", "4:47 PM"))
-        messages.add(MessageData(R.drawable.ic_profile, "Kris", "You: I love u babe!", "4:40 PM"))
-        messages.add(MessageData(R.drawable.ic_profile, "Vas", "Be in touch", "3:20 PM"))
-        messages.add(MessageData(R.drawable.ic_profile, "Richard", "Ok", "2:17 PM"))
-        messages.add(MessageData(R.drawable.ic_profile, "Ron", "You: Hahhah", "OCT 22"))
-        messages.add(MessageData(R.drawable.ic_profile, "Gerry", "You: I don't think so", "OCT 22"))
-        messages.add(MessageData(R.drawable.ic_profile, "Bob", "Good luck", "AUG 17"))
-        messages.add(MessageData(R.drawable.ic_profile, "Stan", "Hey", "AUG 11"))
+        val uri = mapOf(
+            1 to Uri.parse("https://sun9-65.userapi.com/4sDLUQDn7pFnnxek3301ivZ_4bKw55RGK0owVw/xpFsKSRNxfo.jpg"),
+            2 to Uri.parse("https://sun1.beeline-kz.userapi.com/c831209/v831209882/1b0bd5/NbNTu45tcG8.jpg"),
+            3 to Uri.parse("https://sun9-35.userapi.com/DiX10Reb8nTlutw5fRRYd-4OnII-aJQalv1wUQ/aJl4-S6rQLM.jpg"),
+            4 to Uri.parse("https://sun9-2.userapi.com/WII6xdQ7zhjpzAXhaij-HvD6InKijYOiz8etqA/InwuALn9738.jpg"),
+            5 to Uri.parse("https://static.hollywoodreporter.com/sites/default/files/2016/04/richard_hendricks_screen_shot.jpg"),
+            6 to Uri.parse("https://sun9-52.userapi.com/EgJjWbjMrP54UdP9U89ZfHQci0Gaf6BEiNqlvA/p74M1BbgAho.jpg"),
+            7 to Uri.parse("https://soci.cms.arts.ubc.ca/wp-content/uploads/sites/3/2017/08/cropped-Gerry-Veenstra.jpg"),
+            8 to Uri.parse("https://ionehiphopwired.files.wordpress.com/2019/10/15700332151172.jpg?quality=85&strip=all"),
+            9 to Uri.parse("https://defendernetwork.com/wp-content/uploads/2020/06/HFD.jpg")
+        )
+
+        messages.add(MessageData(uri[1], "Nick",true, "Bud! Where you were?? Ar...  ", "57m",true))
+        messages.add(MessageData(uri[2], "Dan",false,"What's up?", "2h",false))
+        messages.add(MessageData(uri[3], "Kris",true,"Sup?", "5h", false))
+        messages.add(MessageData(uri[4], "Vas",false,"Be in touch, please. Okay?", "5h",false))
+        messages.add(MessageData(uri[5], "Richard",false,"Ok", "1d",true))
+        messages.add(MessageData(uri[6], "Ron",true, "Hahhah", "1d",false))
+        messages.add(MessageData(uri[7], "Gerry",true, "I don't think so", "2d",true))
+        messages.add(MessageData(uri[8], "Bob",false,"I'm busy. Have a nice day, man!", "2d",true))
+        messages.add(MessageData(uri[9], "Stan",false,"Hey", "2d",true))
 
         epoxy_recycler_view.withModels {
             messages.forEach{
                 messageAdapter{
                     id(hashCode())
-                    image(it.image)
+                    imageUri(it.imageUri)
                     name(it.name)
+                    whoSent(it.whoSent)
                     message(it.message)
                     time(it.time)
+                    online(it.online)
                 }
             }
         }
