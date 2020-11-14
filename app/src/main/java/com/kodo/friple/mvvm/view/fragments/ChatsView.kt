@@ -44,6 +44,7 @@ class ChatsView: Fragment(), BackButtonListener {
         return binding.root
     }
 
+    // Just for beauty (TEMPORARILY)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val uri = mapOf(
             1 to Uri.parse("https://sun9-65.userapi.com/4sDLUQDn7pFnnxek3301ivZ_4bKw55RGK0owVw/xpFsKSRNxfo.jpg"),

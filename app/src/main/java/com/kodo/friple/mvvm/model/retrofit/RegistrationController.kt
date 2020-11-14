@@ -20,8 +20,6 @@ class RegistrationController : Callback<ResponseApi> {
     lateinit var responseMessage: String
 
     fun start(regData: RegLogData.RegistrationBody, responseCallBack: ResponseRegCallBack) {
-        //Check regData
-        Log.d("RegistrationController", "$regData")
 
         // Set to variables value from regData
         login = regData.login
@@ -37,8 +35,6 @@ class RegistrationController : Callback<ResponseApi> {
     }
 
     override fun onResponse(call: Call<ResponseApi>, response: Response<ResponseApi>) {
-        Log.d("RegistrationController", "onResponse method")
-        Log.d("RegistrationController", "Response body: ${response.body()}")
         when (response.code()) {
             409 -> userExists(response.body())
             201 -> userWasReg(response.body())

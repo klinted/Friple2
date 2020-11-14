@@ -10,11 +10,10 @@
             type="com.kodo.friple.mvvm.viewmodel.ProfileViewModel" />
     </data>
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_background"
-        app:layoutDescription="@xml/profile_screen_scene">
+        android:background="@color/color_background">
 
         <View
             android:id="@+id/view2"
@@ -154,5 +153,5 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:onClick="@{() -> viewModel.logOut()}"/>-->
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

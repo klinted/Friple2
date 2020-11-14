@@ -39,14 +39,15 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.log_screen, container, false)
 
-        val viewModelFactory =
-            MyViewModelFactory((parentFragment as RouterProvider).router, context!!)
+        // Pass context and router. We need them in viewModel
+        val viewModelFactory = MyViewModelFactory((parentFragment as RouterProvider).router, context!!)
         mRegLogViewModel = ViewModelProvider(this, viewModelFactory)
             .get(RegLogViewModel::class.java)
 
         binding.viewModel = mRegLogViewModel
         binding.executePendingBindings()
 
+        // For change check loginned state
         mAppConfig = AppConfig(context!!)
 
         return binding.root
@@ -55,12 +56,15 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Bottom navigation we don't need in this fragment
         activity?.bottom_navigation?.hide()
         btn_sign_in.isClickable = false
 
+        // Add textListeners for change clickable, color Reg button and check for empty string
         et_login.addTextChangedListener(this)
         et_password.addTextChangedListener(this)
 
+        // When we get response from server, snackBarStatus sets true and we do this method
         mRegLogViewModel.snackBarStatus.observe(viewLifecycleOwner, { status ->
             status?.let {
                 mRegLogViewModel.snackBarStatus.value = null
@@ -68,6 +72,11 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
 
                 val handler = Handler()
 
+                // If user loginned is done successfully (we check it in appConfig where exists
+                // string "isUserLogin"). Then starts doneLoadingAnimation with successful icon in finish,
+                // and move to Profile Screen
+                // Else starts doneLoadingAnimation with unsuccessful icon in finish,
+                // and calls revertAnimation method
                 if (mAppConfig.isUserLogin()) {
                     btn_sign_in.doneLoadingAnimation(
                         ContextCompat.getColor(context!!, R.color.color_secondary),
@@ -76,6 +85,7 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
                         )
                     )
 
+                    // Wait, cause we need time for anim finishing
                     handler.postDelayed({
                         mRegLogViewModel.openProfile()
                     }, 2000)
@@ -87,13 +97,16 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
                         )
                     )
 
+                    // Wait, cause we need time for anim finishing
                     handler.postDelayed({
                         btn_sign_in?.revertAnimation {
+                            // Set last background (now button is round)
                             btn_sign_in?.setBackgroundResource(R.drawable.active_button)
                         }
                     }, 2000)
                 }
 
+                // Shows snackBar with message
                 Snackbar.make(
                     view,
                     "${mRegLogViewModel.message.value}",
@@ -102,22 +115,29 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
             }
         })
 
+        // Here starts button's animation
         mRegLogViewModel.animate.observe(viewLifecycleOwner, { status ->
             status?.let {
                 btn_sign_in.startAnimation()
+                // Cause button will be round. If we don't do this, in last button's state, background
+                // will be square. That's not good
                 btn_sign_in.setBackgroundResource(R.drawable.circle_shape)
             }
         })
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+        // Here we check empty string
         if (et_login.text.toString().replace(" ", "").isNotEmpty() &&
             et_password.text.toString().replace(" ", "").isNotEmpty()) {
 
+            // If editText is not null change button's background to active color by dataBinding
+            // and sets clickable status true
             mRegLogViewModel.isSelectedBackground.set(true)
             btn_sign_in.isClickable = true
         } else {
+            // If editText is null change button's background to inactive color by dataBinding
+            // and sets clickable status false
             mRegLogViewModel.isSelectedBackground.set(false)
             btn_sign_in.isClickable = false
         }
@@ -134,6 +154,7 @@ class LogView : Fragment(), BackButtonListener, TextWatcher {
 
     override fun onDestroy() {
         super.onDestroy()
+        // Here shows bottom navigation, cause user need it in Profile screen
         activity?.bottom_navigation?.show()
     }
 

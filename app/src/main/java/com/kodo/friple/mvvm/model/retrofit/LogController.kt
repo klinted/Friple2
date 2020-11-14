@@ -18,8 +18,6 @@ class LogController : Callback<ResponseApi> {
     lateinit var responseMessage: String
 
     fun start(logData: RegLogData.LoginBody, responseCallBack: ResponseLogCallBack) {
-        //Check logData
-        Log.d("RegistrationController", "$logData")
 
         // Set to variables value from logData
         login = logData.login
@@ -34,8 +32,6 @@ class LogController : Callback<ResponseApi> {
     }
 
     override fun onResponse(call: Call<ResponseApi>, response: Response<ResponseApi>) {
-        Log.d("LoginController", "onResponse method")
-        Log.d("LoginController", "Response body: ${response.body()}")
         when (response.code()) {
             200 -> successfullyLog()
             401 -> unsuccessfullyLog()
@@ -44,7 +40,7 @@ class LogController : Callback<ResponseApi> {
     }
 
     override fun onFailure(call: Call<ResponseApi>, t: Throwable) {
-
+        Log.d("LogController", "onFailure method")
     }
 
     private fun successfullyLog() {

@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(), RouterProvider{
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        // In viewModel we need router
         val viewModelFactory = MyViewModelFactory(router)
         mActivityMainViewModel = ViewModelProvider(this, viewModelFactory)
             .get(MainActivityViewModel::class.java)
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity(), RouterProvider{
 
     private fun initBottomBar() {
 
+        // Sets bottom navigation
         bottom_navigation
             .addItem(BottomNavigationItem(R.drawable.ic_home, "Home"))
             .addItem(BottomNavigationItem(R.drawable.ic_chats, "Chats"))
@@ -84,7 +86,7 @@ class MainActivity : AppCompatActivity(), RouterProvider{
         var currentFragment: Fragment? = null
         val fragments = fm.fragments
 
-        Log.d("fff", "fragments: $fragments")
+        Log.d("Tabs", "fragments: $fragments")
 
         for (f in fragments) {
             if (f.isVisible) {
@@ -95,7 +97,7 @@ class MainActivity : AppCompatActivity(), RouterProvider{
 
         val newFragment = fm.findFragmentByTag(tab)
 
-        Log.d("fff", "new fragment: $newFragment")
+        Log.d("Tabs", "new fragment: $newFragment")
 
         if (currentFragment != null && newFragment != null && currentFragment === newFragment) return
 

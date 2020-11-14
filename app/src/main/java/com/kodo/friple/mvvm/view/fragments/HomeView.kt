@@ -26,6 +26,7 @@ class HomeView: Fragment(), BackButtonListener {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_screen, container, false)
 
+        // Pass router. We need them in viewModel
         val viewModelFactory = MyViewModelFactory((parentFragment as RouterProvider).router)
         mHomeViewModel = ViewModelProvider(this, viewModelFactory)
             .get(HomeViewModel::class.java)

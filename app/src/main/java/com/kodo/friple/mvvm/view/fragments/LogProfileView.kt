@@ -27,6 +27,7 @@ class LogProfileView: Fragment(), BackButtonListener {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.log_profile_screen, container, false)
 
+        // Pass router. We need it in viewModel
         val viewModelFactory = MyViewModelFactory((parentFragment as RouterProvider).router)
         mLogProfileViewModel = ViewModelProvider(this, viewModelFactory)
             .get(LogProfileViewModel::class.java)

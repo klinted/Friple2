@@ -42,6 +42,7 @@ class ProfileView: Fragment(), BackButtonListener{
         return binding.root
     }
 
+    // Just for beauty  (TEMPORARILY)
     private fun setImages(root: View) {
         val uri = mapOf(
             1 to Uri.parse("https://sun9-45.userapi.com/AziJn-jiwrW5ezv2SZ8hT-Cjg_X3QZoXPXJvbQ/D74bpUiIkgY.jpg"),

@@ -14,21 +14,24 @@ import com.kodo.friple.mvvm.view.activities.MainActivity
 
 class RegLogViewModel(val router: Router, val context: Context): BaseViewModel() {
 
+    // For control background of button
     val isSelectedBackground = ObservableField<Boolean>()
 
     var mRegLogModel: RegLogModel = RegLogModel()
 
     private val mAppConfig: AppConfig = AppConfig(context)
 
+    // Here we gets strings from xml
     val login = ObservableField<String>()
     val email = ObservableField<String>()
     val password = ObservableField<String>()
 
     fun startReg(){
+        // Change string variables to data class
         val regData: RegLogData.RegistrationBody =
             RegLogData.RegistrationBody(login.get()!!, email.get()!!, password.get()!!)
 
-        Log.d("VM", "RegData: $regData")
+        // Here we set true for variables and observers will be react
         isLoading.set(true)
         animate.value = true
 

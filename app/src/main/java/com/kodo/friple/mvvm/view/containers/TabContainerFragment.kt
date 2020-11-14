@@ -25,6 +25,7 @@ class TabContainerFragment : Fragment(), RouterProvider, BackButtonListener {
 
     lateinit var mAppConfig: AppConfig
 
+    // Creates navigator
     private val navigator: Navigator by lazy {
         AppNavigator(
             activity!!,
@@ -37,6 +38,7 @@ class TabContainerFragment : Fragment(), RouterProvider, BackButtonListener {
     @Inject
     lateinit var ciceroneHolder: LocalCiceroneHolder
 
+    // For check which tab opened
     private val containerName: String
         get() = arguments?.getString(EXTRA_NAME)!!
 
@@ -44,6 +46,7 @@ class TabContainerFragment : Fragment(), RouterProvider, BackButtonListener {
         SampleApplication.INSTANCE.navigationComponent.inject(this)
         super.onCreate(savedInstanceState)
 
+        // For check loginned state
         mAppConfig = AppConfig(context!!)
     }
 
@@ -62,9 +65,13 @@ class TabContainerFragment : Fragment(), RouterProvider, BackButtonListener {
         super.onActivityCreated(savedInstanceState)
         if (childFragmentManager.findFragmentById(R.id.ftc_container) == null) {
             when(containerName){
+                // Home tab clicked
                 "HOME" -> cicerone.router.replaceScreen(Home(containerName, 0))
+                // Chats tab clicked
                 "CHATS" -> cicerone.router.replaceScreen(Chats(containerName, 0))
+                // Profile tab clicked
                 "PROFILE" -> {
+                    // If user loginned opens him profile screen, else login screen
                     if (mAppConfig.isUserLogin()) {
                         cicerone.router.replaceScreen(Profile(containerName, 0))
                     } else {
